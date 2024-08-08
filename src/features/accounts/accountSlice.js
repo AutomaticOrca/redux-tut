@@ -42,8 +42,6 @@ const accountSlice = createSlice({
     },
   },
 });
-// console.log(accountSlice);
-export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
 
 export function deposit(amount, currency) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
@@ -63,6 +61,8 @@ export function deposit(amount, currency) {
   };
 }
 
+// console.log(accountSlice);
+export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
 export default accountSlice.reducer;
 
 // classical redux

@@ -6,8 +6,7 @@ import "./index.css";
 import store from "./store";
 import { Provider } from "react-redux";
 
-store.dispatch({ type: "account/deposit", payload: 250 });
-console.log(store.getState());
+console.log("main.jsx initial State: ", store.getState());
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
