@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deposit, withdraw, requestLoan, payLoan } from "./accountSlice";
 function AccountOperations() {
   const [depositAmount, setDepositAmount] = useState("");
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
@@ -7,13 +8,42 @@ function AccountOperations() {
   const [loanPurpose, setLoanPurpose] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  function handleDeposit() {}
+  const dispatch = useDispatch();
 
-  function handleWithdrawal() {}
+  const {
+    loan: currentLoan,
+    loanPurpose: currentLoanPurpose,
+    balance,
+    // isLoading,
+  } = useSelector((store) => store.account);
+  console.log(
+    `Current Balance: ${balance}, Current Loan: ${currentLoan}, Current Loan Purpose: ${currentLoanPurpose}`
+  );
 
-  function handleRequestLoan() {}
+  function handleDeposit() {
+    if (!depositAmount) return;
+    dispatch(deposit(depositAmount));
+    setDepositAmount("");
+  }
 
-  function handlePayLoan() {}
+  function handleWithdrawal() {
+    if (!withdrawalAmount) return;
+    dispatch(withdraw(withdrawalAmount));
+    setWithdrawalAmount("");
+  }
+
+  function handleRequestLoan() {
+    if (!loanAmount || !loanPurpose) return;
+    dispatch(requestLoan(loanAmount, loanPurpose));
+    setLoanAmount("");
+    setLoanPurpose("");
+  }
+
+  function handlePayLoan() {
+    if (currentLoan === 0 || currentLoan === "0") return;
+    if (currentLoan > balance) return;
+    dispatch(payLoan());
+  }
 
   return (
     <div>
@@ -66,10 +96,14 @@ function AccountOperations() {
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>
 
-        <div>
-          <span>Pay back $X</span>
-          <button onClick={handlePayLoan}>Pay loan</button>
-        </div>
+        {currentLoan > 0 && (
+          <div>
+            <span>
+              Pay back ${currentLoan} (${currentLoanPurpose})
+            </span>
+            <button onClick={handlePayLoan}>Pay loan</button>
+          </div>
+        )}
       </div>
     </div>
   );
