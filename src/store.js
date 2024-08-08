@@ -11,6 +11,8 @@ const store = configureStore({
     customer: customerReducer,
   },
 });
+
+export default store;
 // const rootReducer = combineReducers({
 //   account: accountReducer,
 //   customer: customerReducer,
@@ -21,7 +23,7 @@ const store = configureStore({
 //   composeWithDevTools(applyMiddleware(thunk))
 // );\
 
-export default store;
+// export default store;
 
 // const initialStateAccount = {
 //   balance: 0,
